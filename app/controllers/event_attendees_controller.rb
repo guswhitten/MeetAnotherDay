@@ -9,13 +9,10 @@ class EventAttendeesController < ApplicationController
   # GET /event_attendees or /event_attendees.json
   def index
     @event_attendee = EventAttendee.where(profile: current_user.profile)
-    # byebug;
-    # @event_attendees = EventAttendee.where(event_id: @event.id)
   end
 
   # GET /event_attendees/1 or /event_attendees/1.json
   def show
-    byebug;
     @event_attendees = EventAttendee.where(event_id: @event.id)
   end
 
@@ -61,10 +58,6 @@ class EventAttendeesController < ApplicationController
       format.html { redirect_to event_attendees_url, notice: "Event attendee was successfully destroyed." }
       format.json { head :no_content }
     end
-  end
-
-  def get_all_attendees
-    
   end
 
   private
