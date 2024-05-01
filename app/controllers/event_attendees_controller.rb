@@ -8,11 +8,16 @@ class EventAttendeesController < ApplicationController
 
   # GET /event_attendees or /event_attendees.json
   def index
-    @event_attendees = EventAttendee.where(profile: current_user.profile)
+    @event_attendee = EventAttendee.where(profile: current_user.profile)
+    # byebug;
+    # @event_attendees = EventAttendee.where(event_id: @event.id)
   end
 
   # GET /event_attendees/1 or /event_attendees/1.json
-  def show; end
+  def show
+    byebug;
+    @event_attendees = EventAttendee.where(event_id: @event.id)
+  end
 
   # GET /event_attendees/new
   def new
@@ -58,6 +63,10 @@ class EventAttendeesController < ApplicationController
     end
   end
 
+  def get_all_attendees
+    
+  end
+
   private
 
   # callback to set event attendee for create
@@ -76,4 +85,6 @@ class EventAttendeesController < ApplicationController
   def event_attendee_params
     params.require(:event_attendee).permit(:profile_id, :event_id, :organizer)
   end
+
+
 end

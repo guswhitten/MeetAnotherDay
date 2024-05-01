@@ -16,25 +16,31 @@
       <div class="column is-one-quarter">
         <div class="mb-3">
           <% if current_user&.profile&.attending? @event %>
-            <%= button_to "Not Attending",
-            { controller: :event_attendees,
-            action: :destroy,
-            id: current_user&.profile&.event_attendee(@event)&.first&.id },
-            method: :delete,
-            class: "button is-danger" %>
+            <div class="attendance-status">
+              <%= button_to "Cancel Attendance",
+              { controller: :event_attendees,
+              action: :destroy,
+              id: current_user&.profile&.event_attendee(@event)&.first&.id },
+              method: :delete,
+              class: "button is-danger" %>
+            </div>
+            
           <% elsif current_user %>
-            <%= button_to "Attend",
-              event_attendees_path(
-                event_attendee: {
-                                  profile_id: current_user.profile&.id,
-                                  event_id: @event.id
-                              }
-            ),
-            action: "create",
-            class: "button is-primary" %>
+            <div class="attendance-status">
+              <%= button_to "Attend",
+                event_attendees_path(
+                  event_attendee: {
+                                    profile_id: current_user.profile&.id,
+                                    event_id: @event.id
+                                }
+              ),
+              action: "create",
+              class: "button is-primary" %>
+            </div>
+    
           <% end %>
         </div>
-        <%= render "event_attendees/list", event_attendees: @event_attendees %>
+        <%= render "event_attendees/list", event_attendees: EventAttendee.where(event_id: @event.id) %>
       </div>
     </div>
   </div>
